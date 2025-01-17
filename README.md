@@ -1,6 +1,6 @@
 # FED2024Assg2_P06_Team10
 # Mokesell Prototype
-Mokesell is a new online shopping 
+Mokesell is a new online shopping platform that makes it fun, simple and enjoyable for users to shop online. 
 ## Design Process
 
 ## Features
