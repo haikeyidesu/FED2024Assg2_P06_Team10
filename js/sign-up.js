@@ -118,7 +118,7 @@ document.addEventListener("DOMContentLoaded", function () {
           content = `${content}<tr id='${response[i]._id}'><td>${response[i].MemberName}</td>
           <td>${response[i].MemberEmail}</td>
           <td>${response[i].MemberMobile}</td>
-          <td><a href='#' class='delete' data-id='${response[i]._id}'>Del</a></td><td><a href='#update-member-container' class='update' data-id='${response[i]._id}' data-mobile='${response[i].MemberMobile}' data-name='${response[i].Name}' data-email='${response[i].MemberEmail}'>Update</a></td></tr>`;
+          <td><a href='#' class='delete' data-id='${response[i]._id}'>Del</a></td><td><a href='#update-member-container' class='update' data-id='${response[i]._id}' data-mobile='${response[i].MemberMobile}' data-name='${response[i].MemberName}' data-email='${response[i].MemberEmail}'>Update</a></td></tr>`;
         }
 
         //[STEP 9]: Update our HTML content
