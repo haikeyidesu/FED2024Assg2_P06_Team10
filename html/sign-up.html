@@ -14,7 +14,7 @@
 
     <div class="container">
         <h1>Simple Contact Form System</h1>
-        <div id="add-update-msg">
+        <div id="add-update-mobile">
             <div class="alert alert-success" role="alert">
                 Contact record successfully added
             </div>
@@ -62,7 +62,7 @@
                 Contact record updated sucessfully
             </div>
         </div>
-        <h4>Update Contact</h4>
+        <h4>Update Member</h4>
         <div class="form" id="update-member">
             <form id="update-member-form">
                 <div class="form-group">
@@ -76,13 +76,17 @@
                         with
                         anyone else.</small>
                 </div>
+
                 <div class="form-group">
-                    <label for="update-member-mobile">Message</label>
-                    <textarea id="update-member-mobile" class="form-control" required></textarea>
+                    <label for="update-member-mobile">Email</label>
+                    <input type="number" id="update-member-mobile" class="form-control" required>
+                    <small id="update-member-mobile" class="form-text text-muted">We'll never share your email
+                        with
+                        anyone else.</small>
                     <input type="hidden" id="update-member-id">
                 </div>
 
-                <input type="submit" value="Update Contact Details" class="btn btn-warning" id="update-member-submit">
+                <input type="submit" value="Update Member Details" class="btn btn-warning" id="update-member-submit">
             </form>
         </div>
     </div>
@@ -90,8 +94,7 @@
     </div>
     <script src="../js/popper.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/rest-db.js"></script>
-    <script src="../js/script.js"></script>
+    <script src="../js/sign-up.js"></script>
 </body>
 
 </html>

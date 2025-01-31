@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const APIKEY = "6796eee2f9d2bb4e17181e1e";
   getContacts();
   document.getElementById("update-member-container").style.display = "none";
-  document.getElementById("add-update-msg").style.display = "none";
+  document.getElementById("add-update-mobile").style.display = "none";
 
   //[STEP 1]: Create our submit form listener
   document.getElementById("member-submit").addEventListener("click", function (e) {
@@ -12,8 +12,8 @@ document.addEventListener("DOMContentLoaded", function () {
     e.preventDefault();
 
     //[STEP 2]: Let's retrieve form data
-    // For now, we assume all information is valMemberID
-    // You are to do your own data valMemberIDation
+    // For now, we assume all information is valid
+    // You are to do your own data validation
     let MemberName = document.getElementById("member-name").value;
     let MemberEmail = document.getElementById("member-email").value;
     let MemberMobile = document.getElementById("member-mobile").value;
@@ -24,58 +24,56 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    //[STEP 3]: Get form values when the user clicks on send
-    // Adapted from restdb API
-    let jsondata = {
-      "MemberName": MemberName,
-      "MemberEmail": MemberEmail,
-      "MemberMobile": MemberMobile
-    };
+    // Generate a unique MemberID
+    generateMemberID().then(MemberID => {
+      //[STEP 3]: Get form values when the user clicks on send
+      // Adapted from restdb API
+      let jsondata = {
+        "MemberName": MemberName,
+        "MemberEmail": MemberEmail,
+        "MemberMobile": MemberMobile,
+        "MemberID": MemberID
+      };
 
-    //[STEP 4]: Create our AJAX settings. Take note of API key
-    let settings = {
-      method: "POST", //[cher] we will use post to send info
-      headers: {
-        "Content-Type": "application/json",
-        "x-apikey": APIKEY,
-        "Cache-Control": "no-cache"
-      },
-      body: JSON.stringify(jsondata),
-      beforeSend: function () {
-        //@TODO use loading bar instead
-        // Disable our button or show loading bar
-        document.getElementById("member-submit").disabled = true;
-        // Clear our form using the form ID and triggering its reset feature
-        document.getElementById("add-member-form").reset();
-      }
-    }
-
-    //[STEP 5]: Send our AJAX request over to the DB and print response of the RESTDB storage to console.
-    fetch("https://mokesell-5fa0.restdb.io/rest/member", settings)
-      .then(response => {
-        if (!response.ok) {
-          return response.json().then(err => { throw err });
+      //[STEP 4]: Create our AJAX settings. Take note of API key
+      let settings = {
+        method: "POST", //[cher] we will use post to send info
+        headers: {
+          "Content-Type": "application/json",
+          "x-apikey": APIKEY,
+          "Cache-Control": "no-cache"
+        },
+        body: JSON.stringify(jsondata),
+        beforeSend: function () {
+          //@TODO use loading bar instead
+          // Disable our button or show loading bar
+          document.getElementById("member-submit").disabled = true;
+          // Clear our form using the form ID and triggering its reset feature
+          document.getElementById("add-member-form").reset();
         }
-        return response.json();
-      })
-      .then(data => {
-        console.log(data); // The response will include the generated MemberID
-        document.getElementById("member-submit").disabled = false;
-        //@TODO update frontend UI 
-        document.getElementById("add-update-msg").style.display = "block";
-        setTimeout(function () {
-          document.getElementById("add-update-msg").style.display = "none";
-        }, 3000);
-        // Update our table 
-        getContacts();
-      })
-      .catch(error => {
-        console.error("Error:", error);
-        alert(`Error: ${error.message}\nDetails: ${JSON.stringify(error.list)}`);
-        document.getElementById("member-submit").disabled = false;
-      });
-  });//end click 
+      }
 
+      //[STEP 5]: Send our AJAX request over to the DB and print response of the RESTDB storage to console.
+      fetch("https://mokesell-5fa0.restdb.io/rest/member", settings)
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          document.getElementById("member-submit").disabled = false;
+          //@TODO update frontend UI 
+          document.getElementById("add-update-mobile").style.display = "block";
+          setTimeout(function () {
+            document.getElementById("add-update-mobile").style.display = "none";
+          }, 3000);
+          // Update our table 
+          getContacts();
+        })
+        .catch(error => {
+          console.error("Error:", error);
+          alert(`Error: ${error.message}\nDetails: ${JSON.stringify(error.list)}`);
+          document.getElementById("member-submit").disabled = false;
+        });
+    });
+  });//end click 
 
   //[STEP] 6
   // Let's create a function to allow you to retrieve all the information in your members
@@ -94,7 +92,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //[STEP 8]: Make our AJAX calls
     // Once we get the response, we modify our table content by creating the content internally. We run a loop to continuously add on data
-    // RESTDb/NoSql always adds in a unique MemberID for each data; we tap on it to have our data and place it into our links 
+    // RESTDb/NoSql always adds in a unique id for each data; we tap on it to have our data and place it into our links 
     fetch("https://mokesell-5fa0.restdb.io/rest/member", settings)
       .then(response => response.json())
       .then(response => {
@@ -106,9 +104,9 @@ document.addEventListener("DOMContentLoaded", function () {
           // Let's run our loop and slowly append content
           // We can use the normal string append += method
           /*
-          content += "<tr><td>" + response[i].MemberName + "</td>" +
-            "<td>" + response[i].MemberEmail + "</td>" +
-            "<td>" + response[i].MemberMobile + "</td>
+          content += "<tr><td>" + response[i].name + "</td>" +
+            "<td>" + response[i].email + "</td>" +
+            "<td>" + response[i].message + "</td>
             "<td>Del</td><td>Update</td</tr>";
           */
 
@@ -117,11 +115,10 @@ document.addEventListener("DOMContentLoaded", function () {
           // Take note that we can't use += for template literal strings
           // We use ${content} because -> content += content 
           // We want to add on previous content at the same time
-          content = `${content}<tr MemberID='${response[i].MemberID}'><td>${response[i].MemberName}</td>
+          content = `${content}<tr id='${response[i]._id}'><td>${response[i].MemberName}</td>
           <td>${response[i].MemberEmail}</td>
           <td>${response[i].MemberMobile}</td>
-          <td><a href='#' class='delete' data-MemberID='${response[i].MemberID}'>Del</a></td><td><a href='#update-member-container' class='update' data-MemberID='${response[i].MemberID}' data-msg='${response[i].MemberMobile}' data-MemberName='${response[i].MemberName}' data-MemberEmail='${response[i].MemberEmail}'>Update</a></td></tr>`;
-
+          <td><a href='#' class='delete' data-id='${response[i]._id}'>Del</a></td><td><a href='#update-member-container' class='update' data-id='${response[i]._id}' data-mobile='${response[i].MemberMobile}' data-name='${response[i].Name}' data-email='${response[i].MemberEmail}'>Update</a></td></tr>`;
         }
 
         //[STEP 9]: Update our HTML content
@@ -140,13 +137,13 @@ document.addEventListener("DOMContentLoaded", function () {
     if (e.target.classList.contains("update")) {
       e.preventDefault();
       // Update our update form values
-      let MemberName = e.target.getAttribute("data-MemberName");
-      let MemberEmail = e.target.getAttribute("data-MemberEmail");
-      let MemberMobile = e.target.getAttribute("data-msg");
-      let MemberID = e.target.getAttribute("data-MemberID");
-      console.log(e.target.getAttribute("data-msg"));
+      let MemberName = e.target.getAttribute("data-name");
+      let MemberEmail = e.target.getAttribute("data-email");
+      let MemberMobile = e.target.getAttribute("data-mobile");
+      let MemberID = e.target.getAttribute("data-id");
+      console.log(e.target.getAttribute("data-mobile"));
 
-      //[STEP 11]: Load in our data from the selected row and add it to our update member form 
+      //[STEP 11]: Load in our data from the selected row and add it to our update Member form 
       document.getElementById("update-member-name").value = MemberName;
       document.getElementById("update-member-email").value = MemberEmail;
       document.getElementById("update-member-mobile").value = MemberMobile;
@@ -156,12 +153,12 @@ document.addEventListener("DOMContentLoaded", function () {
     else if (e.target.classList.contains("delete")) {
       e.preventDefault();
 
-      let MemberID = e.target.dataset.MemberID;
+      let MemberID = e.target.dataset.id;
       deleteRecord(MemberID);
     }
   });//end member-list listener for update function
 
-  //[STEP 12]: Here we load in our member form data
+  //[STEP 12]: Here we load in our Member form data
   // Update form listener
   document.getElementById("update-member-submit").addEventListener("click", function (e) {
     e.preventDefault();
@@ -176,14 +173,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //[STEP 12a]: We call our update form function which makes an AJAX call to our RESTDB to update the selected information
     updateForm(MemberID, MemberName, MemberEmail, MemberMobile);
-  });//end updatememberform listener
+  });//end updateMemberform listener
 
   //[STEP 13]: Function that makes an AJAX call and processes it 
   // UPDATE Based on the ID chosen
-  function updateForm(MemberID, MemberName, MemberEmail, MemberMobile) {
-    //@TODO create valMemberIDation methods for MemberID etc. 
+  function updateForm(id, MemberName, MemberEmail, MemberMobile) {
+    //@TODO create validation methods for id etc. 
 
-    var jsondata = { "MemberID": _id, "MemberName": MemberName, "MemberEmail": MemberEmail, "MemberMobile": MemberMobile };
+    var jsondata = { "MemberName": MemberName, "MemberEmail": MemberEmail, "MemberMobile": MemberMobile, "MemberID": id };
     var settings = {
       method: "PUT",
       headers: {
@@ -194,8 +191,8 @@ document.addEventListener("DOMContentLoaded", function () {
       body: JSON.stringify(jsondata)
     }
 
-    //[STEP 13a]: Send our AJAX request and hMemberIDe the update member form
-    fetch(`https://mokesell-5fa0.restdb.io/rest/member/${MemberID}`, settings)
+    //[STEP 13a]: Send our AJAX request and hide the update Member form
+    fetch(`https://mokesell-5fa0.restdb.io/rest/member/${id}`, settings)
       .then(response => response.json())
       .then(data => {
         console.log(data);
@@ -224,6 +221,31 @@ document.addEventListener("DOMContentLoaded", function () {
         getContacts();
       })
       .catch(error => console.log(error));
+  }
+
+  // Function to generate a unique MemberID
+  function generateMemberID() {
+    return fetch("https://mokesell-5fa0.restdb.io/rest/member", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "x-apikey": APIKEY,
+        "Cache-Control": "no-cache"
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        let highestID = 0;
+        data.forEach(member => {
+          if (member.MemberID) {
+            let memberNumber = parseInt(member.MemberID.substring(1));
+            if (memberNumber > highestID) {
+              highestID = memberNumber;
+            }
+          }
+        });
+        return `M${(highestID + 1).toString().padStart(5, '0')}`;
+      });
   }
 
 });
