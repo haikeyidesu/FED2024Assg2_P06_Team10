@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });//end click 
 
   //[STEP] 6
-  // Let's create a function to allow you to retrieve all the information in your members
+  // a function to retrieve all the information of members
   // By default, we only retrieve 10 results
   function getContacts(limit = 10, all = true) {
 
