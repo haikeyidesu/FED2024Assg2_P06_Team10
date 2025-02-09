@@ -56,20 +56,14 @@
                       </ul>
                       <div class="col-lg-4">
                         <div class="promo">
-                          <span class="image image-overlay" style="background-image: url(assets/images/background-3.jpg)"></span>
+                          <span class="image image-overlay" style="background-image: url(assets/images/Castorice\ BG.jpg)"></span>
                           <div class="promo-footer p-4 text-white">
-                            <h3 class="mb-0">New Collection</h3>
                             <a href="#!" class="eyebrow underline text-white">Shop Now</a>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="documentation/index.html">
-                    Docs
-                  </a>
                 </li>
               </ul>
             </div>
@@ -111,7 +105,7 @@
             <p class="lead my-1 text-dark">
               Phone: +65 6466 6555 <br>
             </p>
-            <p class="lead my-1 text-dark">Email: <a href="https://mail.google.com/mail/?view=cm&fs=1&to=contact@webuildthemes.com" target="_blank">contact@webuildthemes.com</a></p>
+            <p class="lead my-1 text-dark">Email: <a href="https://mail.google.com/mail/?view=cm&fs=1&to=contact@webuildthemes.com" target="_blank">luotianrui2007@gmail.com</a></p>
           </div>
         </div>
       </div>
@@ -126,33 +120,35 @@
             <p>We don't spam. Promise!</p>
           </div>
           <div class="col-lg-8 pl-lg-5">
-            <div class="row gutter-2">
-              <div class="form-group col-md-6">
-                <label for="inputName">First Name</label>
-                <input type="text" class="form-control" id="inputName" placeholder="">
-              </div>
-              <div class="form-group col-md-6">
-                <label for="inputEmail">Email</label>
-                <input type="email" class="form-control" id="inputEmail" placeholder="">
-              </div>
-              <div class="form-group col-12">
-                <label for="inputNameSecond">Subject</label>
-                <input type="text" class="form-control" id="inputNameSecond" placeholder="">
-              </div>
-              <div class="form-group col-12">
-                <label for="inputTextarea">Message</label>
-                <textarea class="form-control" id="inputTextarea" rows="3"></textarea>
-              </div>
-              <div class="col-12">
-                <div class="custom-control custom-switch mb-2">
-                  <input type="checkbox" class="custom-control-input" id="customSwitch1">
-                  <label class="custom-control-label text-muted" for="customSwitch1">Subscribe me to weekly newsletter</label>
+            <form id="contactForm">
+              <div class="row gutter-2">
+                <div class="form-group col-md-6">
+                  <label for="inputName">First Name</label>
+                  <input type="text" class="form-control" id="inputName" name="name" required>
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="inputEmail">Email</label>
+                  <input type="email" class="form-control" id="inputEmail" name="email" required>
+                </div>
+                <div class="form-group col-12">
+                  <label for="inputSubject">Subject</label>
+                  <input type="text" class="form-control" id="inputSubject" name="subject" required>
+                </div>
+                <div class="form-group col-12">
+                  <label for="inputTextarea">Message</label>
+                  <textarea class="form-control" id="inputTextarea" name="message" rows="3" required></textarea>
+                </div>
+                <div class="col-12">
+                  <div class="custom-control custom-switch mb-2">
+                    <input type="checkbox" class="custom-control-input" id="customSwitch1" name="subscribe">
+                    <label class="custom-control-label text-muted" for="customSwitch1">Subscribe me to weekly newsletter</label>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <button type="submit" class="btn btn-primary mt-2">Send Message</button>
                 </div>
               </div>
-              <div class="col-12">
-                <a href="#!" class="btn btn-primary mt-2">Send Message</a>
-              </div>
-            </div>
+            </form>
           </div>
         </div>
       </div>
@@ -305,10 +301,8 @@
       </div>
     </div>
 
-
-
-
     <script src="assets/js/vendor.min.js"></script>
     <script src="assets/js/app.js"></script>
+    <script src="assets/js/contact.js"></script>
   </body>
 </html>
