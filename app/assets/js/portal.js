@@ -5,19 +5,20 @@ document.addEventListener("DOMContentLoaded", function () {
     const togglePassword = document.querySelectorAll('.toggle-password'); // Select all toggle buttons
 
     // for login
-    const loginForm = document.querySelector('#loginForm');
-    const loginEmail = document.querySelector('#loginEmail');
-    const loginPassword = document.querySelector('#loginPassword');
+    const createAccountForm = document.querySelector('#createAccountForm');
+    const newEmail = document.querySelector('#newEmail');
+    const newPassword = document.querySelector('#newPassword');
+    const confirmNewPassword = document.querySelector('#ewPassword');
     const newMemberID = generateMemberID();
 
-    loginForm.addEventListener('submit', function (event) {
+    createAccountForm.addEventListener('submit', function (event) {
         event.preventDefault(); // Prevent the default form submission behavior
 
         // Create a data object using the values from your input fields
         const data = {
             MemberID: newMemberID,
-            MemberEmail: loginEmail.value.trim(),
-            MemberPassword: loginPassword.value.trim()
+            MemberEmail: newEmail.value.trim(),
+            MemberPassword: newPassword.value.trim()
         };
 
         // Send a POST request to the REST API
