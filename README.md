@@ -52,11 +52,13 @@ Planned features:
 
 
 ## Technologies Used
+- Bootstrap
 
 ## Assistive AI
-
+- Chat GPT
+- Microsoft Copilot
+  
 ## Testing
-
 ## Credits
 ### Content
 ### Media
