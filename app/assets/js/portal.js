@@ -4,7 +4,71 @@ document.addEventListener("DOMContentLoaded", function () {
     const APIKEY2 = "67aa0329020c063b98e653c6";
     const DATABASE_URL2 = "https://mokesell2-1228.restdb.io/rest/member";
 
-    const togglePassword = document.querySelectorAll('.toggle-password'); // Select all toggle buttons
+    const togglePassword = document.querySelectorAll('.toggle-loginPassword'); // Select all toggle buttons
+
+    // for login form
+    const loginForm = document.querySelector('#loginForm');
+    const loginEmail = document.querySelector('#loginEmail');
+    const loginPassword = document.querySelector('#loginPassword');
+
+    loginForm.addEventListener('submit', async function (event) {
+        event.preventDefault(); // Prevent form from submitting the default way
+
+        const email = loginEmail.value;
+        const password = loginPassword.value;
+
+        // Check if email or password is empty
+        if (!email || !password) {
+            alert("Please enter both email and password!");
+            return;
+        }
+
+        try {
+            // Fetch the members from the API
+            const response = await fetch(DATABASE_URL2, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-apikey': APIKEY2
+                }
+            });
+
+            if (!response.ok) {
+                alert('Error fetching member data!');
+                return;
+            }
+
+            const members = await response.json();
+
+            // Check if the email exists in the database
+            const member = members.find(member => member.MemberEmail === email);
+
+            if (!member) {
+                // If email does not exist, prompt user to create an account
+                alert('Email not found. Please create an account.');
+                loginEmail.value = ''; // Clear email field
+                loginPassword.value = ''; // Clear password field
+                return;
+            }
+
+            // If email exists, check if the password matches
+            if (member.MemberPassword === password) {
+                // Store the member's _id in localStorage
+                localStorage.setItem('memberId', member._id);
+                // Successful login, redirect to index.html
+                window.location.href = 'index.html';
+            } else {
+                // Password mismatch, clear the form and show an alert
+                alert('Incorrect password!');
+                loginPassword.value = ''; // Clear password field
+            }
+
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred while trying to log in. Please try again later.');
+        }
+    });
+
 
     // for create account form
     const createAccountForm = document.querySelector('#createAccountForm');
@@ -54,18 +118,18 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     });
 
-    // Function to toggle password visibility
+    // Function to toggle loginPassword visibility
     togglePassword.forEach(button => {
         button.addEventListener('click', function () {
-            console.log('Toggle password visibility clicked');
+            console.log('Toggle loginPassword visibility clicked');
             const passwordField = this.previousElementSibling;
-            // if password field type is password, change it to text, and vice versa
-            // this enables the user to toggle between showing and hiding the password
-            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+            // if loginPassword field type is loginPassword, change it to text, and vice versa
+            // this enables the user to toggle between showing and hiding the loginPassword
+            const type = passwordField.getAttribute('type') === 'loginPassword' ? 'text' : 'loginPassword';
             passwordField.setAttribute('type', type);
-            // change the button text whenever the user toggles the password visibility
-            // visible password shows 'Hide Password', while hidden password shows 'Show Password'
-            this.textContent = type === 'password' ? 'Show Password' : 'Hide Password';
+            // change the button text whenever the user toggles the loginPassword visibility
+            // visible loginPassword shows 'Hide Password', while hidden loginPassword shows 'Show Password'
+            this.textContent = type === 'loginPassword' ? 'Show Password' : 'Hide Password';
         });
     });
 });
