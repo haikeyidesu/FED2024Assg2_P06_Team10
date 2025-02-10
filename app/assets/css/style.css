@@ -180,6 +180,11 @@ img {
   height: 550px;
 }
 
+.custom-image-box-2 {
+  width: 300px;
+  height: 150px;
+}
+
 .crop-img {
   width: 220px;
   height: 260px;

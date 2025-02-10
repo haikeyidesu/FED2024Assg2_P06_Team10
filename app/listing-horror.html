@@ -15,14 +15,14 @@
       <div class="container">
         <div class="row">
           <nav class="navbar navbar-expand-lg navbar-dark">
-            <a href="index.html" class="navbar-brand order-1 order-lg-2"><img src="assets/images/logo.svg" alt="Logo"></a>
+            <a href="index.html" class="navbar-brand order-1 order-lg-2"><img src="assets/images/Official MokeSell Logo.png" alt="Logo"></a>
             <button class="navbar-toggler order-2" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse order-3 order-lg-1" id="navbarMenu">
               <ul class="navbar-nav mr-auto">
-                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li><a class="dropdown-item" href="index-user.html">Home</a></li>
                 <li class="nav-item dropdown megamenu">
                   <a class="nav-link dropdown-toggle" href="#!" id="navbarDropdown-4" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Pages
@@ -62,9 +62,6 @@
 
             <div class="collapse navbar-collapse order-4 order-lg-3" id="navbarMenu2">
               <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                  <a class="nav-link" href="portal.html">Log In</a>
-                </li>
                 <li class="nav-item cart">
                   <a data-toggle="modal" data-target="#cart" class="nav-link"><span>Cart</span><span>2</span></a>
                 </li>
@@ -249,17 +246,6 @@
           <div class="col-lg-6 py-10">
             <div class="row justify-content-end">
               <div class="col-lg-10">
-                <h4 class="eyebrow mb-2">Subscribe</h4>
-                <div class="input-group">
-                  <input type="text" class="form-control form-control-lg" placeholder="Email" aria-label="Subscribe" aria-describedby="button-addon2">
-                  <div class="input-group-append">
-                    <button class="btn btn-white" type="button" id="button-addon2">Subscribe</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row justify-content-end">
-              <div class="col-lg-10">
                 <h4 class="eyebrow mb-2">Follow us</h4>
                 <nav class="nav nav-icons">
                   <a class="nav-link" href="#!"><i class="icon-facebook-o"></i></a>
@@ -362,217 +348,6 @@
         </div>
       </div>
     </div>
-
-    <!-- filter -->
-    <div class="modal fade sidebar" id="filter" tabindex="-1" role="dialog" aria-labelledby="filterLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="filterLabel">Filter</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-
-            <!-- categories -->
-            <div class="widget">
-              <span class="widget-collapse d-lg-none" data-toggle="collapse" data-target="#collapse-1" aria-expanded="false" aria-controls="collapse-1" role="button">
-                Filter by Category
-              </span>
-              <div class="d-lg-block collapse" id="collapse-1">
-                <span class="widget-title">Categories</span>
-                <div class="widget-content">
-                  <ul id="page-nav" class="nav flex-column nav-category">
-                    <li class="nav-item">
-                      <a class="nav-link" data-toggle="collapse" href="#menu-2" role="button" aria-expanded="false" aria-controls="menu-2">Women</a>
-                      <div class="collapse" id="menu-2" data-parent="#page-nav">
-                        <div>
-                          <ul class="nav flex-column">
-                            <li class="nav-item">
-                              <a class="nav-link" href="#!">New In</a>
-                            </li>
-                            <li class="nav-item">
-                              <a class="nav-link" href="#!">Clothing</a>
-                            </li>
-                            <li class="nav-item">
-                              <a class="nav-link" href="#!">Shoes</a>
-                            </li>
-                            <li class="nav-item">
-                              <a class="nav-link" href="#!">Accessories</a>
-                            </li>
-                            <li class="nav-item">
-                              <a class="nav-link" href="#!">Face + Body</a>
-                            </li>
-                            <li class="nav-item">
-                              <a class="nav-link" href="#!">Outlet</a>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" data-toggle="collapse" href="#menu-3" role="button" aria-expanded="false" aria-controls="menu-3">Men</a>
-                      <div class="collapse" id="menu-3" data-parent="#page-nav">
-                        <div>
-                          <ul class="nav flex-column">
-                            <li class="nav-item">
-                              <a class="nav-link" href="#!">New In</a>
-                            </li>
-                            <li class="nav-item">
-                              <a class="nav-link" href="#!">Clothing</a>
-                            </li>
-                            <li class="nav-item">
-                              <a class="nav-link" href="#!">Shoes</a>
-                            </li>
-                            <li class="nav-item">
-                              <a class="nav-link" href="#!">Accessories</a>
-                            </li>
-                            <li class="nav-item">
-                              <a class="nav-link" href="#!">Face + Body</a>
-                            </li>
-                            <li class="nav-item">
-                              <a class="nav-link" href="#!">Outlet</a>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <!-- / categories -->
-
-
-            <!-- brands -->
-            <div class="widget">
-              <span class="widget-collapse d-lg-none" data-toggle="collapse" data-target="#collapse-2" aria-expanded="false" aria-controls="collapse-2" role="button">
-                Filter by Brand
-              </span>
-              <div class="d-lg-block collapse" id="collapse-2">
-                <span class="widget-title">Brands</span>
-                <div class="widget-content">
-                  <ul>
-                    <li>
-                      <div class="custom-control custom-checkbox">
-                          <input type="checkbox" class="custom-control-input" id="customCheck1">
-                          <label class="custom-control-label" for="customCheck1">Calvin Klein</label>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="custom-control custom-checkbox">
-                          <input type="checkbox" class="custom-control-input" id="customCheck2">
-                          <label class="custom-control-label" for="customCheck2">Ralph Lauren</label>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="custom-control custom-checkbox">
-                          <input type="checkbox" class="custom-control-input" id="customCheck3">
-                          <label class="custom-control-label" for="customCheck3">Michael Kors</label>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="custom-control custom-checkbox">
-                          <input type="checkbox" class="custom-control-input" id="customCheck4">
-                          <label class="custom-control-label" for="customCheck4">Balenciaga</label>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <!-- / brands -->
-
-
-            <!-- size -->
-            <div class="widget">
-              <span class="widget-collapse d-lg-none" data-toggle="collapse" data-target="#collapse-3" aria-expanded="false" aria-controls="collapse-3" role="button">
-                Filter by Size
-              </span>
-              <div class="d-lg-block collapse" id="collapse-3">
-                <span class="widget-title">Size</span>
-                <div class="widget-content">
-                  <div class="btn-group-toggle btn-group-square" data-toggle="buttons">
-                    <label class="btn active">
-                      <input type="checkbox" name="options" id="option1" checked> S
-                    </label>
-                    <label class="btn">
-                      <input type="checkbox" name="options" id="option2"> M
-                    </label>
-                    <label class="btn">
-                      <input type="checkbox" name="options" id="option3"> L
-                    </label>
-                    <label class="btn">
-                      <input type="checkbox" name="options" id="option4"> XL
-                    </label>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- / size -->
-
-
-
-            <!-- color -->
-            <div class="widget">
-              <span class="widget-collapse d-lg-none" data-toggle="collapse" data-target="#collapse-4" aria-expanded="false" aria-controls="collapse-4" role="button">
-                Filter by Color
-              </span>
-              <div class="d-lg-block collapse" id="collapse-4">
-                <span class="widget-title">Color</span>
-                <div class="widget-content">
-                  <div class="btn-group-toggle btn-group-square btn-group-colors" data-toggle="buttons">
-                    <label class="btn active text-red">
-                      <input type="checkbox" name="options" id="option1-2" checked>
-                    </label>
-                    <label class="btn text-blue">
-                      <input type="checkbox" name="options" id="option2-2">
-                    </label>
-                    <label class="btn text-yellow">
-                      <input type="checkbox" name="options" id="option3-2">
-                    </label>
-                    <label class="btn text-green">
-                      <input type="checkbox" name="options" id="option4-2">
-                    </label>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- / color -->
-
-
-
-            <!-- price -->
-            <div class="widget">
-              <span class="widget-collapse d-lg-none" data-toggle="collapse" data-target="#collapse-5" aria-expanded="false" aria-controls="collapse-5" role="button">
-                Filter by Price
-              </span>
-              <div class="d-lg-block collapse" id="collapse-5">
-                <span class="widget-title">Price</span>
-                <div class="widget-content">
-                  <input type="text" class="rangeslider" name="Range Slider" value="" />
-                </div>
-              </div>
-            </div>
-            <!-- / price -->
-            
-          </div>
-          <div class="modal-footer">
-            <div class="container-fluid">
-              <div class="row gutter-0">
-                <div class="col">
-                  <a href="checkout.html" class="btn btn-lg btn-block btn-primary">Apply Filter</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-
 
     <script src="assets/js/vendor.min.js"></script>
     <script src="assets/js/app.js"></script>
