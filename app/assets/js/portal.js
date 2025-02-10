@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
     const APIKEY = "6796eee2f9d2bb4e17181e1e";
     const DATABASE_URL = "https://mokesell-5fa0.restdb.io/rest/member";
+    const APIKEY2 = "67aa0329020c063b98e653c6";
+    const DATABASE_URL2 = "https://mokesell2-1228.restdb.io/rest/member";
 
     const togglePassword = document.querySelectorAll('.toggle-password'); // Select all toggle buttons
 
@@ -28,11 +30,11 @@ document.addEventListener("DOMContentLoaded", function () {
         };
 
         // Send a POST request to the REST API
-        fetch(DATABASE_URL, {
+        fetch(DATABASE_URL2, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
-                "x-apikey": APIKEY,
+                "x-apikey": APIKEY2,
                 "cache-control": "no-cache"
             },
             body: JSON.stringify(data)
