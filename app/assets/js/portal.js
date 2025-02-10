@@ -4,6 +4,85 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const togglePassword = document.querySelectorAll('.toggle-password'); // Select all toggle buttons
 
+    // for login
+    const loginForm = document.querySelector('#loginForm');
+    const loginEmail = document.querySelector('#loginEmail');
+    const loginPassword = document.querySelector('#loginPassword');
+    const newMemberID = generateMemberID();
+
+    loginForm.addEventListener('submit', function (event) {
+        event.preventDefault(); // Prevent the default form submission behavior
+
+        // Create a data object using the values from your input fields
+        const data = {
+            MemberID: newMemberID,
+            MemberEmail: loginEmail.value.trim(),
+            MemberPassword: loginPassword.value.trim()
+        };
+
+        // Send a POST request to the REST API
+        fetch("https://mokesell-5fa0.restdb.io/rest/member", {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+                "x-apikey": APIKEY,
+                "cache-control": "no-cache"
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(result => {
+                console.log("Data posted successfully:", result);
+                // Optionally, add further processing such as redirecting the user or displaying a success message
+            })
+            .catch(error => {
+                console.error("Error posting data:", error);
+            });
+    });
+
+    // generateMemberID function to generate a new MemberID
+    async function generateMemberID() {
+        try {
+            const response = await fetch(DATABASE_URL, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "x-apikey": APIKEY,
+                    "Cache-Control": "no-cache"
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const data = await response.json();
+
+            // Determine the highest numeric part of the MemberID using reduce
+            const highestID = data.reduce((max, member) => {
+                if (member.MemberID && typeof member.MemberID === 'string' && member.MemberID.startsWith('M')) {
+                    const numberPart = parseInt(member.MemberID.substring(1), 10);
+                    if (!isNaN(numberPart)) {
+                        return Math.max(max, numberPart);
+                    }
+                }
+                return max;
+            }, 0);
+
+            // Generate a new MemberID with a leading "M" and a 5-digit number
+            return `M${(highestID + 1).toString().padStart(5, '0')}`;
+        } catch (error) {
+            console.error("Error generating member ID:", error);
+            throw error; // rethrow or handle as needed
+        }
+    }
+
+
     // Function to toggle password visibility
     togglePassword.forEach(button => {
         button.addEventListener('click', function () {
@@ -18,101 +97,4 @@ document.addEventListener("DOMContentLoaded", function () {
             this.textContent = type === 'password' ? 'Show Password' : 'Hide Password';
         });
     });
-
-    // Handle login form submission
-    if (loginForm) {
-        loginForm.addEventListener('submit', function (event) {
-            event.preventDefault();
-            console.log('Login form submitted');
-
-            const email = loginForm.querySelector('input[name="email"]').value.trim();
-            const password = loginForm.querySelector('input[name="password"]').value.trim();
-
-            fetch(DATABASE_URL, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'x-apikey': APIKEY,
-                    'cache-control': 'no-cache'
-                }
-            })
-                .then(response => response.json())
-                .then(users => {
-                    const user = users.find(user => user.MemberEmail === email && user.MemberPassword === password);
-                    if (user) {
-                        console.log('Login successful');
-                        alert('Login Successful!'); // Replace with Lottie animation
-                        localStorage.setItem('MemberID', user.MemberID); // Store session info
-                        window.location.href = 'index.html';
-                    } else {
-                        console.error('Invalid email or password');
-                        alert('Invalid email or password!'); // Show an actual UI message
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('An error occurred. Please try again.');
-                });
-        });
-    } else {
-        console.error('Login form not found');
-    }
-
-    // Handle create account form submission
-    if (createAccountForm) {
-        createAccountForm.addEventListener('submit', function (event) {
-            event.preventDefault();
-            console.log('Create account form submitted');
-
-            const name = createAccountForm.querySelector('input[name="name"]').value.trim();
-            const email = createAccountForm.querySelector('input[name="email"]').value.trim();
-            const password = createAccountForm.querySelector('input[name="password"]').value.trim();
-
-            // First, check if email already exists
-            fetch(DATABASE_URL, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'x-apikey': APIKEY,
-                    'cache-control': 'no-cache'
-                }
-            })
-                .then(response => response.json())
-                .then(users => {
-                    const existingUser = users.find(user => user.MemberEmail === email);
-                    if (existingUser) {
-                        alert('Email is already registered!');
-                    } else {
-                        // Proceed to create the account
-                        const data = {
-                            MemberName: name,
-                            MemberEmail: email,
-                            MemberPassword: password // Consider hashing this before sending
-                        };
-
-                        return fetch(DATABASE_URL, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'x-apikey': APIKEY,
-                                'cache-control': 'no-cache'
-                            },
-                            body: JSON.stringify(data)
-                        });
-                    }
-                })
-                .then(response => response.json())
-                .then(result => {
-                    console.log('Account creation successful:', result);
-                    alert('Account created successfully!'); // Replace with Lottie animation
-                    createAccountForm.reset(); // Clear form after successful creation
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('An error occurred. Please try again.');
-                });
-        });
-    } else {
-        console.error('Create account form not found');
-    }
 });
