@@ -4,25 +4,31 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const togglePassword = document.querySelectorAll('.toggle-password'); // Select all toggle buttons
 
-    // for login
+    // for create account form
     const createAccountForm = document.querySelector('#createAccountForm');
     const newEmail = document.querySelector('#newEmail');
     const newPassword = document.querySelector('#newPassword');
-    const confirmNewPassword = document.querySelector('#ewPassword');
-    const newMemberID = generateMemberID();
+    const confirmNewPassword = document.querySelector('#confirmNewPassword');
 
     createAccountForm.addEventListener('submit', function (event) {
         event.preventDefault(); // Prevent the default form submission behavior
+        console.log(newPassword.value, confirmNewPassword.value);
+        // Check if passwords match
+        if (newPassword.value !== confirmNewPassword.value) {
+            alert("Passwords do not match! Please try again."); // Show error popup
+            newPassword.value.value = ""; // Clear input fields
+            confirmNewPassword.value = "";
+            return; // Stop form submission
+        }
 
         // Create a data object using the values from your input fields
         const data = {
-            MemberID: newMemberID,
             MemberEmail: newEmail.value.trim(),
             MemberPassword: newPassword.value.trim()
         };
 
         // Send a POST request to the REST API
-        fetch("https://mokesell-5fa0.restdb.io/rest/member", {
+        fetch(DATABASE_URL, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
@@ -45,44 +51,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.error("Error posting data:", error);
             });
     });
-
-    // generateMemberID function to generate a new MemberID
-    async function generateMemberID() {
-        try {
-            const response = await fetch(DATABASE_URL, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    "x-apikey": APIKEY,
-                    "Cache-Control": "no-cache"
-                }
-            });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-
-            const data = await response.json();
-
-            // Determine the highest numeric part of the MemberID using reduce
-            const highestID = data.reduce((max, member) => {
-                if (member.MemberID && typeof member.MemberID === 'string' && member.MemberID.startsWith('M')) {
-                    const numberPart = parseInt(member.MemberID.substring(1), 10);
-                    if (!isNaN(numberPart)) {
-                        return Math.max(max, numberPart);
-                    }
-                }
-                return max;
-            }, 0);
-
-            // Generate a new MemberID with a leading "M" and a 5-digit number
-            return `M${(highestID + 1).toString().padStart(5, '0')}`;
-        } catch (error) {
-            console.error("Error generating member ID:", error);
-            throw error; // rethrow or handle as needed
-        }
-    }
-
 
     // Function to toggle password visibility
     togglePassword.forEach(button => {
