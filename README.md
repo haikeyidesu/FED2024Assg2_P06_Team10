@@ -62,5 +62,6 @@ Planned features:
 ## Credits
 ### Content
 ### Media
+Images were sourced from ___
 ### Acknowledgements
-
+Vendor Template from ___ by ___
